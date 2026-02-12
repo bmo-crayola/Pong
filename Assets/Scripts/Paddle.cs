@@ -3,8 +3,10 @@ using UnityEngine.InputSystem;
 
 public class Paddle : MonoBehaviour
 {
-    public float paddleSpeed = 1f;
-    public float forceStrength = 10f;
+    float paddleSpeed = 3f;
+    // float forceStrength = 10f;
+    float maxTravelHeight = 5.5f;
+    float minTravelHeight = -5.5f;
     public enum Side { Left, Right }
 
     [Header("Paddle Side Choice")]
@@ -23,38 +25,42 @@ public class Paddle : MonoBehaviour
         {
             if (Keyboard.current.wKey.isPressed)
             {
-                Vector3 force = new Vector3(0f, 0f, forceStrength);
-                Rigidbody rBody = GetComponent<Rigidbody>();
-                rBody.AddForce(force, ForceMode.Force);
+                Vector3 newPosition = transform.position + new Vector3(0, 0, 3) * paddleSpeed * Time.deltaTime;
+                newPosition.z = Mathf.Clamp(newPosition.z, minTravelHeight, maxTravelHeight);
 
-                // transform.position += new Vector3(0f, 0f, paddleSpeed) * Time.deltaTime * 7;
+                Rigidbody rBody = GetComponent<Rigidbody>();
+                rBody.linearVelocity = Vector3.zero;
+                rBody.transform.position = newPosition;
             } 
             else if (Keyboard.current.sKey.isPressed)
             {
-                Vector3 force = new Vector3(0f, 0f, -forceStrength);
-                Rigidbody rBody = GetComponent<Rigidbody>();
-                rBody.AddForce(force, ForceMode.Force);
+                Vector3 newPosition = transform.position + new Vector3(0, 0, -3) * paddleSpeed * Time.deltaTime;
+                newPosition.z = Mathf.Clamp(newPosition.z, minTravelHeight, maxTravelHeight);
 
-                // transform.position += new Vector3(0f, 0f, -paddleSpeed) * Time.deltaTime * 7;
+                Rigidbody rBody = GetComponent<Rigidbody>();
+                rBody.linearVelocity = Vector3.zero;
+                rBody.transform.position = newPosition;
             }
         }
         else
         {
             if (Keyboard.current.oKey.isPressed)
             {
-                Vector3 force = new Vector3(0f, 0f, forceStrength);
-                Rigidbody rBody = GetComponent<Rigidbody>();
-                rBody.AddForce(force, ForceMode.Force);
+                Vector3 newPosition = transform.position + new Vector3(0, 0, 3) * paddleSpeed * Time.deltaTime;
+                newPosition.z = Mathf.Clamp(newPosition.z, minTravelHeight, maxTravelHeight);
 
-                // transform.position += new Vector3(0f, 0f, paddleSpeed) * Time.deltaTime * 7;
+                Rigidbody rBody = GetComponent<Rigidbody>();
+                rBody.linearVelocity = Vector3.zero;
+                rBody.transform.position = newPosition;
             } 
             else if (Keyboard.current.lKey.isPressed)
             {
-                Vector3 force = new Vector3(0f, 0f, -forceStrength);
-                Rigidbody rBody = GetComponent<Rigidbody>();    
-                rBody.AddForce(force, ForceMode.Force);
+                Vector3 newPosition = transform.position + new Vector3(0, 0, -3) * paddleSpeed * Time.deltaTime;
+                newPosition.z = Mathf.Clamp(newPosition.z, minTravelHeight, maxTravelHeight);
 
-                // transform.position += new Vector3(0f, 0f, -paddleSpeed) * Time.deltaTime * 7;
+                Rigidbody rBody = GetComponent<Rigidbody>();
+                rBody.linearVelocity = Vector3.zero;
+                rBody.transform.position = newPosition;
             }
         }
 

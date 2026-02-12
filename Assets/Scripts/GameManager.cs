@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
@@ -38,6 +39,7 @@ public class GameManager : MonoBehaviour
         if (leftGoalWasHit)
         {
             rightScore++;
+            StartCoroutine(PopScore(rightScoreText));
             if (rightScore >= winCondition)
             {
                 EndGame("Right Player Wins");
@@ -49,6 +51,7 @@ public class GameManager : MonoBehaviour
         else
         {
             leftScore++;
+            StartCoroutine(PopScore(leftScoreText));
             if (leftScore >= winCondition)
             {
                 EndGame("Left Player Wins");
@@ -59,6 +62,34 @@ public class GameManager : MonoBehaviour
         }
 
         UpdateUI();
+    }
+
+    // changes size and color of score text gradually for a moment to give feedback on scoring
+    IEnumerator PopScore(TextMeshProUGUI sideScoreText)
+    {
+        Vector3 originalScale = sideScoreText.transform.localScale;
+
+        sideScoreText.color = Color.yellow;
+        sideScoreText.transform.localScale = originalScale * 1.3f;
+        yield return new WaitForSeconds(0.1f);
+        sideScoreText.transform.localScale = originalScale * 1.4f;
+        yield return new WaitForSeconds(0.1f);
+        sideScoreText.transform.localScale = originalScale * 1.5f;
+        yield return new WaitForSeconds(0.1f);
+
+        yield return new WaitForSeconds(0.5f);
+
+        sideScoreText.transform.localScale = originalScale * 1.4f;
+        yield return new WaitForSeconds(0.1f);
+        sideScoreText.transform.localScale = originalScale * 1.3f;
+        yield return new WaitForSeconds(0.1f);
+        sideScoreText.transform.localScale = originalScale * 1.2f;
+        yield return new WaitForSeconds(0.1f);
+
+        sideScoreText.color = Color.white;
+        sideScoreText.transform.localScale = originalScale * 1.1f;
+        yield return new WaitForSeconds(0.1f);
+        sideScoreText.transform.localScale = originalScale;        
     }
 
     private void EndGame(string winner)
